@@ -9,6 +9,10 @@ from toqito.perms import antisymmetric_projection
 # Create a zero vector of length 27
 anti_proj_3_3_partial = np.zeros((27, 1))
 
+nonzero_indices = [5, 7, 11, 15, 19, 21]
+anti_proj_3_3_partial[nonzero_indices, 0] = [-0.40824829, 0.40824829, 0.40824829, -0.40824829, -0.40824829, 0.40824829]
+
+'''
 # Set specific indices to -0.40824829 and 0.40824829
 anti_proj_3_3_partial[5] = -0.40824829
 anti_proj_3_3_partial[7] = 0.40824829
@@ -16,10 +20,11 @@ anti_proj_3_3_partial[11] = 0.40824829
 anti_proj_3_3_partial[15] = -0.40824829
 anti_proj_3_3_partial[19] = -0.40824829
 anti_proj_3_3_partial[21] = 0.40824829
+'''
 
 # https://docs.python.org/3/library/platform.html
 # Darwin is the system name for macOS
-@pytest.mark.skipif(platform.system() == "Darwin", reason="3-3-True-expected_result3 fails for macOS")
+#@pytest.mark.skipif(platform.system() == "Darwin", reason="3-3-True-expected_result3 fails for macOS")
 @pytest.mark.parametrize("dim, p_param, partial, expected_result", [
     # Dimension is 2 and p is equal to 1.
     (2, 1, False, np.array([[1, 0], [0, 1]])),
