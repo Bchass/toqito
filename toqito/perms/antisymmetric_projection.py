@@ -81,7 +81,10 @@ def antisymmetric_projection(dim: int, p_param: int = 2, partial: bool = False) 
         return sparse.eye(dim) if not partial else np.eye(dim)
     # The antisymmetric subspace is empty if `dim < p`.
     if dim < p_param:
-        return sparse.lil_matrix((dimp, dimp * (1 - partial))) if not partial else np.zeros((dimp, dimp * (1 - partial)))
+        return (
+    sparse.lil_matrix((dimp, dimp * (1 - partial)))
+    if not partial
+    else np.zeros((dimp, dimp * (1 - partial))))
 
     p_list = np.array(list(permutations(np.arange(1, p_param + 1))))
     p_fac = p_list.shape[0]
