@@ -83,3 +83,9 @@ jobs:
           verbose: true
       - name: Build artifacts
         run: poetry build
+      - name: Print Environment Info
+        run: |
+          echo "Operating System: ${{ runner.os }}"
+          echo "Python Version: ${{ matrix.python-version }}"
+          echo "NumPy Version: $(python -c "import numpy; print(numpy.__version__)")"
+
