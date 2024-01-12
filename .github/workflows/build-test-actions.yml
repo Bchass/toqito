@@ -45,11 +45,6 @@ jobs:
       - name: Code Analyzer Checks
         run: |
           poetry run pylint --fail-under=10.0 toqito/
-      - name: Print Environment Info
-        run: |
-          echo "Operating System: ${{ runner.os }}"
-          echo "Python Version: ${{ matrix.python-version }}"
-          echo "NumPy Version: $(python -c "import numpy; print(numpy.__version__)")"
 
   toqito-pytest:
     strategy:
