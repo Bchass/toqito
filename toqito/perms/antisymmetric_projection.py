@@ -3,11 +3,13 @@ from itertools import permutations
 
 import numpy as np
 from scipy import linalg, sparse
+from scipy.sparse import lil_matrix
+from scipy.linalg import svd
 
 from toqito.perms import perm_sign, permutation_operator
 
 
-def antisymmetric_projection(dim: int, p_param: int = 2, partial: bool = False) -> sparse.lil_matrix:
+def antisymmetric_projection(dim: int, p_param: int = 2, partial: bool = False) -> lil_matrix:
     r"""Produce the projection onto the antisymmetric subspace :cite:`WikiAsymmOp`.
 
     Produces the orthogonal projection onto the anti-symmetric subspace of :code:`p_param` copies of
@@ -78,10 +80,11 @@ def antisymmetric_projection(dim: int, p_param: int = 2, partial: bool = False) 
     dimp = dim ** p_param
 
     if p_param == 1:
-        return sparse.eye(dim)
+        #return sparse.eye(dim)
+        return lil_matrix(np.eye(dim))
     # The antisymmetric subspace is empty if `dim < p`.
     if dim < p_param:
-        return (sparse.lil_matrix((dimp, dimp * (1 - partial))))
+        return sparse.lil_matrix((dimp, dimp * (1 - partial)))
 
     p_list = np.array(list(permutations(np.arange(1, p_param + 1))))
     p_fac = p_list.shape[0]
@@ -94,6 +97,8 @@ def antisymmetric_projection(dim: int, p_param: int = 2, partial: bool = False) 
     anti_proj = anti_proj / p_fac
 
     if partial:
-        anti_proj = anti_proj.todense()
-        anti_proj = sparse.lil_matrix(linalg.orth(anti_proj))
+        #anti_proj = anti_proj.todense()
+        #anti_proj = sparse.lil_matrix(linalg.orth(anti_proj))
+        _, _, Vt = svd(anti_proj.todense())
+        anti_proj = lil_matrix(Vt.T)
     return anti_proj
