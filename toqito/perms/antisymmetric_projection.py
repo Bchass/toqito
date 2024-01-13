@@ -3,8 +3,8 @@ from itertools import permutations
 
 import numpy as np
 from scipy import linalg, sparse
-from scipy.sparse import lil_matrix
 from scipy.linalg import svd
+from scipy.sparse import lil_matrix
 
 from toqito.perms import perm_sign, permutation_operator
 
